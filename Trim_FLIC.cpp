@@ -51,7 +51,7 @@ int main()
 	wf.open(filename_trim_joints, ios::out);
 	wf << "Trim_joints" << endl;
 
-	string buff_ifs1,buff_ifs2;
+	string buff_ifs1, buff_ifs2;
 	string filepath;
 	int data_ifs1[100] = { 0 };
 	int data_ifs2[100] = { 0 };
@@ -63,7 +63,7 @@ int main()
 
 		//------------ load csv ---------------
 		vector<string> result_ifs1 = split(buff_ifs1, ",");
-		for (int k = 0; k < result_ifs1.size() ; k++) {
+		for (int k = 0; k < result_ifs1.size(); k++) {
 			if (k == 0) filepath = result_ifs1[k];
 			else{
 				if (result_ifs1[k] == "NaN") data_ifs1[k - 1] = NUMBER_NAN;
@@ -77,7 +77,7 @@ int main()
 		//cout << "y" << filepath << "z" << " [" << data_ifs1[0] << " " << data_ifs1[1] << "] [" << data_ifs1[2] << " " << data_ifs1[3] << "]" << endl;
 
 		vector<string> result_ifs2 = split(buff_ifs2, ",");
-		for (int k = 0; k < result_ifs2.size() ; k++) {
+		for (int k = 0; k < result_ifs2.size(); k++) {
 			if (k == 0) continue;
 			else{
 				if (result_ifs1[k] == "NaN") data_ifs2[k - 1] = NUMBER_NAN;
@@ -91,7 +91,7 @@ int main()
 
 		//-------------------------------------
 
-		wf << filepath ;
+		wf << filepath;
 		Mat src_org = imread(Path_dataset + filepath);
 		//rectangle(src_org, Point(data_ifs2[0], data_ifs2[1]), Point(data_ifs2[2], data_ifs2[3]),Scalar(255,0,0),3,4);
 		int tb_width = abs(data_ifs2[0] - data_ifs2[2]);
@@ -108,10 +108,10 @@ int main()
 		if (data_ifs2[3] + tb_height*k > src_org.rows) data_ifs2[3] = src_org.rows;
 		else data_ifs2[3] += tb_height*k;
 
-		
+
 		//printf("[torsobox] = [ %d , %d ] , [ %d , %d ]\n", data_ifs2[0], data_ifs2[1], data_ifs2[2], data_ifs2[3]);
 
-		Mat src_roi  = src_org( Rect(data_ifs2[0], data_ifs2[1], data_ifs2[2]-data_ifs2[0], data_ifs2[3]-data_ifs2[1]));
+		Mat src_roi = src_org(Rect(data_ifs2[0], data_ifs2[1], data_ifs2[2] - data_ifs2[0], data_ifs2[3] - data_ifs2[1]));
 		//imshow("src_roi", src_roi);
 		//waitKey();
 		imwrite(Path_output + filepath, src_roi);
